@@ -4,6 +4,7 @@
 
 A simple spark standalone virtual docker compose cluster with a running thrift server for testing purposses.
 The cluster shares the spark warehouse space with the thrift server.
+Tested with Tableau.
 
 ## Build the images
 
