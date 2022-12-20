@@ -6,17 +6,17 @@ A simple spark standalone virtual docker compose cluster with a running thrift s
 The cluster shares the spark warehouse space with the thrift server.
 Tested with Tableau.
 
-## Build the images
-
-```sh
-docker compose build
-```
-
 ## Set file sharing permissions
 
 ```sh
 chmod g+rwx files
 sudo chown :root files
+```
+
+## Build the images
+
+```sh
+docker compose build
 ```
 
 ## Run the docker-compose
