@@ -1,0 +1,71 @@
+version: "3.2"
+
+services:
+  spark-master:
+    build: spark
+    image: damian-barsotti/spark
+    container_name: 'spark-master'
+    working_dir: ${WORKDIR}
+    environment:
+      SPARK_LOG_DIR: ${WORKDIR}/logs
+      SPARK_NO_DAEMONIZE: true
+    working_dir: "${SPARK_HOME}/work-dir"
+    ports: 
+      - '8080:8080'
+      - '7077:7077'
+    command: "${SPARK_HOME}/sbin/start-master.sh"
+    depends_on:
+      - metastore-db
+    tty: true
+    volumes:
+      - ./files:/files
+      - ./files:${WORKDIR}/files
+
+  worker:
+    build: spark
+    image: damian-barsotti/spark
+    working_dir: ${WORKDIR}
+    environment:
+      SPARK_LOG_DIR: ${WORKDIR}/logs
+      SPARK_NO_DAEMONIZE: true
+      SPARK_WORKER_DIR: ${WORKDIR}
+    working_dir: "${SPARK_HOME}/work-dir"
+    command: "${SPARK_HOME}/sbin/start-worker.sh --cores 1 --memory 1G spark://spark-master:7077"
+    depends_on:
+      - spark-master
+      - metastore-db
+    deploy:
+      replicas: 4
+    tty: true
+    volumes:
+      - ./files:/files
+      - ./files:${WORKDIR}/files
+
+  spark-thrift-server:
+    build: spark
+    image: damian-barsotti/spark
+    container_name: 'spark-thrift-server'
+    working_dir: ${WORKDIR}
+    environment:
+      SPARK_LOG_DIR: ${WORKDIR}/logs
+      SPARK_NO_DAEMONIZE: true
+      SPARK_WORKER_DIR: ${WORKDIR}
+    working_dir: "${SPARK_HOME}/work-dir"
+    command: "${SPARK_HOME}/sbin/start-thriftserver.sh --master spark://spark-master:7077 --total-executor-cores 2"
+    depends_on:
+      - spark-master
+      - worker
+      - metastore-db
+    tty: true
+    volumes:
+      - ./files:/files
+      - ./files:${WORKDIR}/files
+
+  metastore-db:
+    build: metastore-mysql
+    image: damian-barsotti/metastore-mysql
+    container_name: 'metastore-db'
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${METASTORE_PW}
+    tty: true
