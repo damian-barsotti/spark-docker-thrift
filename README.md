@@ -33,4 +33,11 @@ docker-compose up -d
 docker compose exec -it spark-master /bin/bash
 /files/run-test.sh
 /files/connect-thrift-server.sh
+exit
+```
+
+## Show ip of thrift server
+
+```sh
+./show-thrift-server-ip.sh
 ```
