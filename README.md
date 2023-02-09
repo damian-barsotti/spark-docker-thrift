@@ -27,6 +27,10 @@ The final step to create your test cluster will be to run the compose file:
 docker compose up -d
 ```
 
+## Show Spark UI
+
+http://localhost:8080/
+
 ## Test the cluster
 
 ```sh
