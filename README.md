@@ -24,7 +24,7 @@ docker compose build
 The final step to create your test cluster will be to run the compose file:
 
 ```sh
-docker-compose up -d
+docker compose up -d
 ```
 
 ## Test the cluster
