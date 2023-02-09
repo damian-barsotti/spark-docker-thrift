@@ -31,6 +31,8 @@ docker compose up -d
 
 http://localhost:8080/
 
+You should see the thrift server as an application.
+
 ## Test the cluster
 
 ```sh
