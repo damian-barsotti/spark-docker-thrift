@@ -5,11 +5,8 @@ services:
     build: spark
     image: damian-barsotti/spark
     container_name: 'spark-master'
-    working_dir: ${WORKDIR}
     environment:
-      SPARK_LOG_DIR: ${WORKDIR}/logs
       SPARK_NO_DAEMONIZE: true
-    working_dir: "${SPARK_HOME}/work-dir"
     ports: 
       - '8080:8080'
       - '7077:7077'
@@ -19,17 +16,13 @@ services:
     tty: true
     volumes:
       - ./files:/files
-      - ./files:${WORKDIR}/files
 
   worker:
     build: spark
     image: damian-barsotti/spark
-    working_dir: ${WORKDIR}
     environment:
-      SPARK_LOG_DIR: ${WORKDIR}/logs
       SPARK_NO_DAEMONIZE: true
       SPARK_WORKER_DIR: ${WORKDIR}
-    working_dir: "${SPARK_HOME}/work-dir"
     command: "${SPARK_HOME}/sbin/start-worker.sh --cores 1 --memory 1G spark://spark-master:7077"
     depends_on:
       - spark-master
@@ -39,18 +32,14 @@ services:
     tty: true
     volumes:
       - ./files:/files
-      - ./files:${WORKDIR}/files
 
   spark-thrift-server:
     build: spark
     image: damian-barsotti/spark
     container_name: 'spark-thrift-server'
-    working_dir: ${WORKDIR}
     environment:
-      SPARK_LOG_DIR: ${WORKDIR}/logs
       SPARK_NO_DAEMONIZE: true
       SPARK_WORKER_DIR: ${WORKDIR}
-    working_dir: "${SPARK_HOME}/work-dir"
     command: "${SPARK_HOME}/sbin/start-thriftserver.sh --master spark://spark-master:7077 --total-executor-cores 2"
     depends_on:
       - spark-master
@@ -59,7 +48,6 @@ services:
     tty: true
     volumes:
       - ./files:/files
-      - ./files:${WORKDIR}/files
 
   spark-cmd:
     build: spark
@@ -69,7 +57,6 @@ services:
     tty: true
     volumes:
       - ./files:/files
-      - ./files:${WORKDIR}/files
 
   metastore-db:
     build: metastore-mysql
