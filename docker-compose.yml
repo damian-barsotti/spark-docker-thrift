@@ -61,6 +61,16 @@ services:
       - ./files:/files
       - ./files:${WORKDIR}/files
 
+  spark-cmd:
+    build: spark
+    image: damian-barsotti/spark
+    container_name: 'spark-cmd'
+    profiles: ["cli-only"]
+    tty: true
+    volumes:
+      - ./files:/files
+      - ./files:${WORKDIR}/files
+
   metastore-db:
     build: metastore-mysql
     image: damian-barsotti/metastore-mysql

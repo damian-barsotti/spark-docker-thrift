@@ -36,10 +36,8 @@ You should see the thrift server as an application.
 ## Test the cluster
 
 ```sh
-docker compose exec -it spark-master /bin/bash
-/files/run-test.sh
-/files/connect-thrift-server.sh
-exit
+docker compose run -it spark-cmd /opt/spark/bin/spark-submit /files/load_data_write_to_server.py
+docker compose run -it spark-cmd /files/connect-thrift-server.sh
 ```
 
 ## Show ip of thrift server
