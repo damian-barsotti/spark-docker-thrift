@@ -49,15 +49,6 @@ services:
     volumes:
       - ./files:/files
 
-  spark-cmd:
-    build: spark
-    image: damian-barsotti/spark
-    container_name: 'spark-cmd'
-    profiles: ["cli-only"]
-    tty: true
-    volumes:
-      - ./files:/files
-
   metastore-db:
     build: metastore-mysql
     image: damian-barsotti/metastore-mysql
@@ -66,3 +57,12 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${METASTORE_PW}
     tty: true
+
+  spark-cmd:
+    build: spark
+    image: damian-barsotti/spark
+    container_name: 'spark-cmd'
+    profiles: ["cli-only"]
+    tty: true
+    volumes:
+      - ./files:/files
