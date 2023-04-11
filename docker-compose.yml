@@ -66,3 +66,14 @@ services:
     tty: true
     volumes:
       - ./files:/files
+
+  zeppelin:
+    build: zeppelin
+    image: damian-barsotti/zeppelin:0.10.1
+    container_name: 'zeppelin'
+    profiles: ["cli-only"]
+    ports:
+      - '8090:8080'
+    tty: true
+    volumes:
+      - ./files:/files
