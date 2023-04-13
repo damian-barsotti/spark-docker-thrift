@@ -77,3 +77,14 @@ services:
     tty: true
     volumes:
       - ./files:/files
+
+  jupyter:
+    image: damian-barsotti/pyspark-notebook:3.3.1
+    container_name: 'jupyter'
+    profiles: ["cli-only"]
+    ports:
+      - '8888:8888'
+    tty: true
+    volumes:
+      - ./files:/home/jovyan/work
+      - ./files:/files  # The same as Spark containers
