@@ -37,6 +37,9 @@ You should see the thrift server as an application.
 
 ```sh
 docker compose run -it spark-cmd /opt/spark/bin/spark-submit --master spark://spark-master:7077 /files/load_data_write_to_server.py
+```
+
+```sh
 docker compose run -it spark-cmd /files/connect-thrift-server.sh
 ```
 
