@@ -3,6 +3,16 @@ FROM apache/spark-py:${SPARK_VERSION}
 
 MAINTAINER Damian Barsotti <damian.barsotti@unc.edu.ar>
 
+ARG spark_uid=185
+
+USER root
+
+RUN apt-get update &&\
+    DEBIAN_FRONTEND=noninteractive apt-get install -y iputils-ping &&\
+    rm -rf /var/cache/apt/*
+
+USER ${spark_uid}
+
 COPY ./hive-site.xml ${SPARK_HOME}/conf/
 
 COPY ./spark-defaults.conf ${SPARK_HOME}/conf/
