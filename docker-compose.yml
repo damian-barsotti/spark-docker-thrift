@@ -79,7 +79,7 @@ services:
       - ./shared-folder:/shared-folder
 
   jupyter:
-    image: damian-barsotti/pyspark-notebook:3.3.1
+    image: damianbarsotti/pyspark-notebook:v3.3.1.0
     container_name: 'jupyter'
     profiles: ["cli-only"]
     networks:

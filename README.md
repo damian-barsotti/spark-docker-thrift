@@ -43,6 +43,15 @@ docker compose run -it spark-cmd /opt/spark/bin/spark-submit --master spark://sp
 docker compose run -it spark-cmd /shared-folder/connect-thrift-server.sh
 ```
 
+## Run Jupyter notebook in the cluster
+
+```sh
+docker compose up jupyter
+```
+and open the link begining with "http://127.0.0.1:8888/lab?token=".
+
+There are some notebooks examples in the `work` folder inside Jupyter.
+
 ## Show ip of thrift server
 
 ```sh
