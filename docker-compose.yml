@@ -15,7 +15,7 @@ services:
       - metastore-db
     tty: true
     volumes:
-      - ./files:/files
+      - ./shared-folder:/shared-folder
 
   worker:
     build: spark
@@ -31,7 +31,7 @@ services:
       replicas: 4
     tty: true
     volumes:
-      - ./files:/files
+      - ./shared-folder:/shared-folder
 
   spark-thrift-server:
     build: spark
@@ -47,7 +47,7 @@ services:
       - metastore-db
     tty: true
     volumes:
-      - ./files:/files
+      - ./shared-folder:/shared-folder
 
   metastore-db:
     build: metastore-mysql
@@ -65,7 +65,7 @@ services:
     profiles: ["cli-only"]
     tty: true
     volumes:
-      - ./files:/files
+      - ./shared-folder:/shared-folder
 
   zeppelin:
     build: zeppelin
@@ -76,15 +76,17 @@ services:
       - '8090:8080'
     tty: true
     volumes:
-      - ./files:/files
+      - ./shared-folder:/shared-folder
 
   jupyter:
     image: damian-barsotti/pyspark-notebook:3.3.1
     container_name: 'jupyter'
     profiles: ["cli-only"]
+    networks:
+      - default
     ports:
       - '8888:8888'
     tty: true
     volumes:
-      - ./files:/home/jovyan/work
-      - ./files:/files  # The same as Spark containers
+      - ./shared-folder:/home/jovyan/work
+      - ./shared-folder:/shared-folder  # The same as Spark containers

@@ -1,11 +1,7 @@
-#Imports
 from pyspark.sql import SparkSession #Spark Session
 from pyspark.sql import DataFrame
 import os
 import sys
-
-# FILE_CSV = "/spark/src/spark/userid-profile.tsv"
-#DELIMITER = "\t"
 
 if __name__ == "__main__":
     # Crear spark session
@@ -13,7 +9,7 @@ if __name__ == "__main__":
     script_path = os.path.abspath(os.path.dirname(sys.argv[0]))
     print("Running dir:", script_path)
 
-    FILE_CSV = f"/files/airports.csv"
+    FILE_CSV = f"/shared-folder/airports.csv"
     DELIMITER = ","
 
     spark = SparkSession.builder \
